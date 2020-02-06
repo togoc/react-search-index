@@ -4,30 +4,27 @@ import Ajax from './ajax'
 
 class Count {
     name = 'togoc'
-    @observable count = 100
     @observable orderList = []
-
-    @computed get doubleCount() {
-        return this.count * 2
-    }
+    @observable list = []
 
     @action increment = () => {
         this.count += 1
     }
 
-    @action getList = () => {
-        Ajax.get('/list').then(res => {
-            console.log(res)
-            // this.count = res.data
+
+
+    @action getOrderList = async (str) => {
+        str = str.replace(/\s+/g, "")
+        await Ajax.get('/order-list?keyword=' + str).then(res => {
+            this.orderList = res.data
         })
     }
 
-    @action getOrderList = async (str) => {
-        let data = []
-        await Ajax.get('/order-list?keyword=' + str).then(res => {
-            data = res.data
+    @action getList = async (str) => {
+        str = str.replace(/\s+/g, " ")
+        await Ajax.get('/form-list?keyword=' + str).then(res => {
+            this.list = res.data
         })
-        return data
     }
 }
 

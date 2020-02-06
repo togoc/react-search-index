@@ -6,15 +6,11 @@ import { Link } from 'react-router-dom';
 const { Option } = AutoComplete;
 
 
-function getRandomInt(max, min = 0) {
-    return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
-}
-
 
 
 function renderOption(item) {
     return (
-        <Option key={item._id} text={item.keyword}>
+        <Option key={item.keyword} text={item.keyword}>
             <div className="global-search-item">
                 <span className="global-search-item-desc">
                     <Link
@@ -33,46 +29,14 @@ function renderOption(item) {
 @observer
 class Complete extends React.Component {
     state = {
-        dataSource: [],
-        query: 'a',
+        query: '',
+        open: false
     };
-
-    handleSearch = async query => {
-        query = query.replace(/^\s*|\s*$/g, '')
-        let data = await this.props.store.getOrderList(query)
-        console.log(data)
-        this.setState({
-            dataSource: query ? data : [],
-            query
-        });
-    };
-
-    onSelect = (value) => {
-
-        console.log('onSelect', value); //待取
-    }
-    searchResult = async (query) => {
-        // return [
-        //     {
-        //         query: "321",
-        //         category: "321",
-        //         count: 1
-        //     }
-        // ]
-
-        // return new Array(getRandomInt(5))
-        //     .join('.')
-        //     .split('.')
-        //     .map((item, idx) => ({
-        //         query,
-        //         category: `${query}${idx}`,
-        //         count: getRandomInt(200, 100),
-        //     }));
+    componentDidMount() {
 
     }
     render() {
-        const { getList, getOrderList } = this.props.store
-        const { dataSource } = this.state;
+        const { getList, getOrderList, orderList } = this.props.store
         return (
             <>
                 {
@@ -83,15 +47,44 @@ class Complete extends React.Component {
                         className="global-search"
                         size="large"
                         style={{ width: '100%' }}
-                        dataSource={dataSource.map(renderOption)}
-                        onSelect={this.onSelect}
-                        onSearch={this.handleSearch}
+                        dataSource={orderList.map(renderOption)}
+                        onSelect={(str) => {
+                            this.setState({
+                                open: false,
+                                query: str
+                            })
+                            getList(str)
+                        }}
+                        onSearch={(str) => {
+                            this.setState({
+                                open: true,
+                                query: str
+                            })
+                            getOrderList(str)
+                        }}
+                        onKeyUp={() => {
+                            console.log(1)
+                        }}
                         placeholder="请输入搜索内容"
                         optionLabelProp="text"
                         autoFocus
                         allowClear
+                        filterOption={(inputValue, option) => {
+                            inputValue = inputValue.replace(/\s+/g, "")
+                            console.log(inputValue, option)
+                            return true
+                        }}
+                        open={this.state.open}
                     >
                         <Input
+                            onKeyUp={(e) => {
+                                if (e.keyCode === 13) {
+                                    this.setState({
+                                        open: false,
+                                    })
+                                    getList(this.state.query)
+                                }
+                            }}
                             suffix={
                                 <Button
                                     className="search-btn"
@@ -99,7 +92,10 @@ class Complete extends React.Component {
                                     size="large"
                                     type="primary"
                                     onClick={() => {
-                                        getOrderList(this.state.query)
+                                        this.setState({
+                                            open: false,
+                                        })
+                                        getList(this.state.query)
                                     }}
                                 >
                                     <Icon type="search" />
