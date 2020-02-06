@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
 import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
+import { observer } from 'mobx-react'
 import { Home, Detail } from './pages'
-export default class App extends Component {
+import store from './store'
+window.store = store
+@observer class App extends Component {
   render() {
     return (
       <>
+        {store.count}
         <HashRouter>
           <Switch>
-            <Route component={Home} path="/home" />
+            <Route render={() => {
+              return <Home store={store} />
+            }} path="/home" />
             <Route component={Detail} path="/detail" />
-
             <Redirect
               from="/"
               to="/home"
@@ -20,3 +25,5 @@ export default class App extends Component {
     )
   }
 }
+
+export default App

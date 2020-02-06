@@ -232,28 +232,28 @@ let str = `
 </ul>
 `
 export default class Detail extends Component {
-    componentDidMount() {
-    }
-    render() {
-        return (
-            <>
-                <Anchor>
-                    <Link href="#title" title="title" />
-                    <Link href="#ui" title="ui" />
-                    <Link href="#reactless" title="reactless" target="_blank" />
-                </Anchor>
-                <BackTop />
-                <div className="search">
-                    <Button type="primary" shape="circle" icon="home"
-                        onClick={() => {
-                            this.props.history.go(-1)
-                        }}
-                    />
-                </div>
-                <div className="content-outer">
-                    <div className="detail-content" dangerouslySetInnerHTML={{ __html: str }} />
-                </div>
-            </>
-        )
-    }
+	componentDidMount() {
+	}
+	render() {
+		return (
+			<>
+				{/* <Anchor>
+					<Link href="#title" title="title" />
+					<Link href="#ui" title="ui" />
+					<Link href="#reactless" title="reactless" target="_blank" />
+				</Anchor> */}
+				<BackTop />
+				<div className="search">
+					<Button type="primary" shape="circle" icon="home"
+						onClick={() => {
+							this.props.history.go(-1)
+						}}
+					/>
+				</div>
+				<div className="content-outer">
+					<div className="detail-content" dangerouslySetInnerHTML={{ __html: str }} />
+				</div>
+			</>
+		)
+	}
 }

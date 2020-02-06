@@ -15,10 +15,15 @@ export default class Home extends Component {
             }
         ]
     }
+  
     render() {
+        const { store } = this.props
+        console.log(store)
         return (
             <div className="home">
                 <div className="title">
+                    <button onClick={store.increment}>+</button>
+                    {store.count}
                     <Title>
                     </Title>
                 </div>
