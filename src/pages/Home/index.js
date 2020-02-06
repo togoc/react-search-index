@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import { Title } from '../../components'
+
 import './index.less'
-export default class Home extends Component {
+@inject('store')
+@observer class Home extends Component {
     state = {
         nav: [
             {
@@ -15,17 +18,14 @@ export default class Home extends Component {
             }
         ]
     }
-  
+
     render() {
+        console.log(this.props)
         const { store } = this.props
-        console.log(store)
         return (
             <div className="home">
                 <div className="title">
-                    <button onClick={store.increment}>+</button>
-                    {store.count}
-                    <Title>
-                    </Title>
+                    <Title />
                 </div>
                 <div className="main">
                     <div className="nav">
@@ -74,3 +74,4 @@ export default class Home extends Component {
         )
     }
 }
+export default Home

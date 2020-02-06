@@ -121,3 +121,7 @@ table {
     border-collapse: collapse;
     border-spacing : 0;
 }
+
+.ant-select-selection__clear {
+    right: 55px !important;
+}

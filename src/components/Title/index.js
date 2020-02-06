@@ -1,59 +1,77 @@
 import { Icon, Button, Input, AutoComplete } from 'antd';
 import React from 'react'
+import { observer, inject } from 'mobx-react'
+import { Link } from 'react-router-dom';
 
 const { Option } = AutoComplete;
 
-function onSelect(value) {
-    console.log('onSelect', value);
-}
 
 function getRandomInt(max, min = 0) {
     return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
 }
 
-function searchResult(query) {
-    return new Array(getRandomInt(5))
-        .join('.')
-        .split('.')
-        .map((item, idx) => ({
-            query,
-            category: `${query}${idx}`,
-            count: getRandomInt(200, 100),
-        }));
-}
+
 
 function renderOption(item) {
     return (
-        <Option key={item.category} text={item.category}>
+        <Option key={item._id} text={item.keyword}>
             <div className="global-search-item">
                 <span className="global-search-item-desc">
-                    Found {item.query} on
-                  <a
-                        href={`https://s.taobao.com/search?q=${item.query}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <Link
+                        // href={`https://s.taobao.com/search?q=${item.query}`}
+                        to="/detail"
+                    // rel="noopener noreferrer"
                     >
-                        {item.category}
-                    </a>
+                        {item.keyword}
+                    </Link>
                 </span>
-                <span className="global-search-item-count">{item.count} results</span>
             </div>
         </Option>
     );
 }
-
-export default class Complete extends React.Component {
+@inject('store')
+@observer
+class Complete extends React.Component {
     state = {
         dataSource: [],
+        query: 'a',
     };
 
-    handleSearch = value => {
+    handleSearch = async query => {
+        query = query.replace(/^\s*|\s*$/g, '')
+        let data = await this.props.store.getOrderList(query)
+        console.log(data)
         this.setState({
-            dataSource: value ? searchResult(value) : [],
+            dataSource: query ? data : [],
+            query
         });
     };
 
+    onSelect = (value) => {
+
+        console.log('onSelect', value); //待取
+    }
+    searchResult = async (query) => {
+        // return [
+        //     {
+        //         query: "321",
+        //         category: "321",
+        //         count: 1
+        //     }
+        // ]
+
+        // return new Array(getRandomInt(5))
+        //     .join('.')
+        //     .split('.')
+        //     .map((item, idx) => ({
+        //         query,
+        //         category: `${query}${idx}`,
+        //         count: getRandomInt(200, 100),
+        //     }));
+
+    }
     render() {
+        const { getList, getOrderList } = this.props.store
         const { dataSource } = this.state;
         return (
             <>
@@ -66,10 +84,12 @@ export default class Complete extends React.Component {
                         size="large"
                         style={{ width: '100%' }}
                         dataSource={dataSource.map(renderOption)}
-                        onSelect={onSelect}
+                        onSelect={this.onSelect}
                         onSearch={this.handleSearch}
-                        placeholder="input here"
+                        placeholder="请输入搜索内容"
                         optionLabelProp="text"
+                        autoFocus
+                        allowClear
                     >
                         <Input
                             suffix={
@@ -78,6 +98,9 @@ export default class Complete extends React.Component {
                                     style={{ marginRight: -12 }}
                                     size="large"
                                     type="primary"
+                                    onClick={() => {
+                                        getOrderList(this.state.query)
+                                    }}
                                 >
                                     <Icon type="search" />
                                 </Button>
@@ -89,3 +112,4 @@ export default class Complete extends React.Component {
         );
     }
 }
+export default Complete
