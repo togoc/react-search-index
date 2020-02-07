@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Code } from '../../components'
+import { Title } from '../../components'
 import { Button, BackTop, Anchor } from 'antd'
 import './index.less'
 const { Link } = Anchor;
@@ -232,26 +232,42 @@ let str = `
 </ul>
 `
 export default class Detail extends Component {
+	state = {
+		showTop: false
+	}
 	componentDidMount() {
+		this.refs.content.onscroll = () => {
+			let winScroll = this.refs.content.scrollTop
+			if (winScroll >= 350) {
+				this.setState({
+					showTop: true
+				})
+			} else {
+				this.setState({
+					showTop: false
+				})
+			}
+		};
 	}
 	render() {
 		return (
 			<>
-				{/* <Anchor>
-					<Link href="#title" title="title" />
-					<Link href="#ui" title="ui" />
-					<Link href="#reactless" title="reactless" target="_blank" />
-				</Anchor> */}
-				<BackTop />
 				<div className="search">
 					<Button type="primary" shape="circle" icon="home"
 						onClick={() => {
 							this.props.history.go(-1)
 						}}
 					/>
+					{
+						this.state.showTop && <Button type="primary" shape="circle" icon="to-top"
+							onClick={() => {
+								this.refs.content.scrollTo(0, 0)
+							}}
+						/>
+					}
 				</div>
 				<div className="content-outer">
-					<div className="detail-content" dangerouslySetInnerHTML={{ __html: str }} />
+					<div ref='content' className="detail-content" dangerouslySetInnerHTML={{ __html: str }} />
 				</div>
 			</>
 		)

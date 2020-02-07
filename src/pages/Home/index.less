@@ -1,87 +1,208 @@
-div.home {
-    div.title {
-        display       : flex;
-        flex-direction: row;
-        align-items   : center;
-        padding       : 1em;
+div.home-outer {
+    width           : 100%;
+    background-color: #1DA57A;
+    height          : 100vh;
+    align-items     : center;
+    display         : flex;
+    justify-content : center;
+    overflow        : hidden;
+    flex-direction  : column;
 
-        img {
-            margin    : 0 .5em;
-            max-width : 100%;
-            max-height: 100%;
-            width     : auto;
-            height    : auto;
-        }
+    div.home {
+        margin          : 0 auto;
+        max-width       : 1000px;
+        width           : 100%;
+        height          : 100vh;
+        overflow        : hidden;
+        box-shadow      : 0 0 .5em rgb(0, 0, 0);
+        background-color: #fff;
 
-        @media(max-width:400px) {
-            img {
-                display: none;
-            }
-        }
+        div.title {
+            width          : 70%;
+            display        : flex;
+            flex-direction : row;
+            justify-content: center;
+            align-items    : center;
+            padding        : 1em;
 
-    }
-
-    div.main {
-        display       : flex;
-        flex-direction: row;
-
-        div.nav {
-            width         : 70%;
-            height        : 100%;
-            padding       : 1em;
-            display       : flex;
-            flex-direction: column;
-
-
-
-            &>span {
-                font-size       : 1.1em;
-                letter-spacing  : 1px;
-                background-color: #f8f8f8;
-                padding         : .5em;
-                width           : 100%;
-            }
-
-            div.content {
-                flex-direction: column;
-                display       : flex;
-
-                div.content-item {
-                    flex-direction: column;
-                    display       : flex;
-                    padding       : 1em 0.5em;
-
-                    a.title {
-                        text-decoration: underline;
-                        font-size      : 1.1em;
-                    }
-
-                    div.content-item-text {
-                        span.text-time {
-                            margin-right: 1em;
-                        }
-
-                        span.text-main {}
-                    }
-                }
-            }
-        }
-
-        div.tips {
-            width      : 30%;
-            border-left: 1px solid #dedede;
-        }
-
-        @media(max-width:635px) {
-
-            div.nav {
+            div.title-main {
                 width: 100%;
             }
 
-            div.tips {
-                display: none;
+            img {
+                margin    : 0 .5em;
+                max-width : 100%;
+                max-height: 100%;
+                width     : auto;
+                height    : auto;
             }
 
+            @media(max-width:400px) {
+                width: 100%;
+
+                img {
+                    display: none;
+                }
+            }
+
+        }
+
+        div.main {
+            width         : 100%;
+            display       : flex;
+            flex-direction: row;
+
+            div.nav {
+                width         : 70%;
+                height        : 100%;
+                padding       : 1em;
+                display       : flex;
+                flex-direction: column;
+                overflow      : hidden;
+
+                //轨道
+                ::-webkit-scrollbar-track {
+                    background-color: #d4d4d4;
+                }
+
+                ::-webkit-scrollbar {
+                    width           : 5px;
+                    background-color: #fff;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    border-radius: 10px;
+                    box-shadow   : 0 0 5px rgba(0, 0, 0, 0.2);
+                    background   : #1DA57A;
+                }
+
+
+                div.content {
+                    flex-direction  : column;
+                    max-height      : calc(100vh - 100px);
+                    min-height      : calc(100vh - 100px);
+                    overflow        : auto;
+                    border-radius   : .5em;
+                    display         : flex;
+                    box-shadow      : 0 0 .5em #1DA57A;
+                    background-color: #fff;
+
+
+
+                    &>p {
+                        margin: 0;
+                    }
+
+                    div.content-item {
+                        flex-direction: column;
+                        display       : flex;
+                        padding       : 1em 0.5em;
+
+                        a.title {
+                            text-decoration: underline;
+                            font-size      : 1.1em;
+                        }
+
+                        div.content-item-text {
+                            span.text-time {
+                                margin-right: 1em;
+                            }
+
+                            span.text-main {}
+                        }
+                    }
+                }
+            }
+
+            div.tips {
+                width          : 30%;
+                border-left    : 1px solid #dedede;
+                display        : flex;
+                justify-content: center;
+                align-items    : center;
+                max-width      : 300px;
+
+                div.tips-inner {
+                    width          : 100%;
+                    height         : 100%;
+                    padding        : .5em;
+                    flex-direction : column;
+                    justify-content: center;
+                    align-items    : center;
+
+                    div.todo-item {
+                        display        : flex;
+                        cursor         : pointer;
+                        flex-wrap      : wrap;
+                        justify-content: center;
+                        align-items    : center;
+                        width          : 100%;
+                        margin         : .5em;
+                        border         : 1px solid rgba(172, 172, 172, 0.479);
+
+                        div.todo-item-inner {
+                            margin         : .25em;
+                            display        : flex;
+                            justify-content: center;
+                            align-items    : center;
+                            flex-wrap      : wrap;
+                            overflow       : hidden;
+
+                            span {
+                                width : 100%;
+                                height: 100%;
+                            }
+                        }
+                    }
+
+                    div.add-content {
+                        border: 0;
+
+                        input {
+                            border     : 1px solid #1DA57A;
+                            outline    : none;
+                            width      : 60%;
+                            font-size  : 1rem;
+                            margin     : 0;
+                            padding    : 0;
+                            text-indent: .5rem;
+                        }
+
+                        button {
+                            cursor          : pointer;
+                            display         : flex;
+                            justify-content : center;
+                            align-items     : center;
+                            outline         : none;
+                            border          : 1px solid #1DA57A;
+                            width           : 60%;
+                            font-size       : 1rem;
+                            margin          : 0;
+                            padding         : 0;
+                            background-color: #fff;
+                        }
+                    }
+                }
+            }
+
+            @media(max-width:635px) {
+
+
+                div.nav {
+                    width           : 100%;
+                    background-color: #1DA57A;
+
+                    div.content {
+                        box-shadow: 0 0 .5em rgb(0, 0, 0);
+
+                    }
+                }
+
+                div.tips {
+                    display: none;
+                }
+
+            }
         }
     }
 }

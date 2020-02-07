@@ -13,13 +13,13 @@ function renderOption(item) {
         <Option key={item.keyword} text={item.keyword}>
             <div className="global-search-item">
                 <span className="global-search-item-desc">
-                    <Link
+                    {/* <Link
                         // href={`https://s.taobao.com/search?q=${item.query}`}
-                        to="/detail"
+                        // to="/detail"
                     // rel="noopener noreferrer"
-                    >
-                        {item.keyword}
-                    </Link>
+                    // >
+                </Link> */}
+                    {item.keyword}
                 </span>
             </div>
         </Option>
@@ -30,19 +30,28 @@ function renderOption(item) {
 class Complete extends React.Component {
     state = {
         query: '',
-        open: false
+        open: false,
+        timer: '0'
     };
-    componentDidMount() {
-
+    onSearch = (str) => {
+        this.setState(() => {
+            if (typeof (this.state.timer) === 'number')
+                clearTimeout(this.state.timer)
+            let timer = setTimeout(() => {
+                this.setState({
+                    open: true,
+                    query: str
+                })
+                this.props.store.getOrderList(str)
+            }, 1100)
+            return { timer }
+        })
     }
     render() {
-        const { getList, getOrderList, orderList } = this.props.store
+        const { getList, orderList } = this.props.store
         return (
             <>
-                {
-                    this.props.children
-                }
-                <div className="global-search-wrapper" style={{ width: 300 }}>
+                <div className="global-search-wrapper" style={{ width: "100%", maxWidth: 450 }}>
                     <AutoComplete
                         className="global-search"
                         size="large"
@@ -55,30 +64,25 @@ class Complete extends React.Component {
                             })
                             getList(str)
                         }}
-                        onSearch={(str) => {
+                        onSearch={str => {
+                            str = str.replace(/\s+/g, "")
+                            if (str === '') return
                             this.setState({
-                                open: true,
-                                query: str
+                                query: str,
                             })
-                            getOrderList(str)
-                        }}
-                        onKeyUp={() => {
-                            console.log(1)
+                            this.onSearch(str)
                         }}
                         placeholder="请输入搜索内容"
+                        defaultActiveFirstOption={false}
                         optionLabelProp="text"
-                        autoFocus
+                        autoFocus={this.state.open}
                         allowClear
-                        filterOption={(inputValue, option) => {
-                            inputValue = inputValue.replace(/\s+/g, "")
-                            console.log(inputValue, option)
-                            return true
-                        }}
                         open={this.state.open}
                     >
                         <Input
                             onKeyUp={(e) => {
                                 if (e.keyCode === 13) {
+                                    clearTimeout(this.state.timer)
                                     this.setState({
                                         open: false,
                                     })

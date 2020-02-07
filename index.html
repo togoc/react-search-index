@@ -17,12 +17,12 @@
 
 </body>
 <script>
-  let str = 'w                  w               w             '
-  console.log(str.replace(/\s+/g, '').length)
-  str.split("").forEach(v => {
-    console.log(1)
-  })
-  console.log()
+  let str = '12345'
+  for (let i = 1; i <= str.length; i++) {
+    for (let j = i + 1; j <= str.length; j++) {
+      console.log(str.slice(i, j))
+    }
+  }
 
 </script>
 
