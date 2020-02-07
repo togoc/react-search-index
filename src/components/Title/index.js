@@ -13,13 +13,9 @@ function renderOption(item) {
         <Option key={item.keyword} text={item.keyword}>
             <div className="global-search-item">
                 <span className="global-search-item-desc">
-                    {/* <Link
-                        // href={`https://s.taobao.com/search?q=${item.query}`}
-                        // to="/detail"
-                    // rel="noopener noreferrer"
-                    // >
-                </Link> */}
-                    {item.keyword}
+                    <Link to="/home/detail">
+                        {item.keyword}
+                    </Link>
                 </span>
             </div>
         </Option>
@@ -49,6 +45,7 @@ class Complete extends React.Component {
     }
     render() {
         const { getList, orderList } = this.props.store
+        const { push } = this.props
         return (
             <>
                 <div className="global-search-wrapper" style={{ width: "100%", maxWidth: 450 }}>
@@ -63,6 +60,7 @@ class Complete extends React.Component {
                                 query: str
                             })
                             getList(str)
+                            push("/home")
                         }}
                         onSearch={str => {
                             str = str.replace(/\s+/g, "")
@@ -72,10 +70,13 @@ class Complete extends React.Component {
                             })
                             this.onSearch(str)
                         }}
+                        filterOption={(inputValue, option) => {
+                            return option.key !== '无数据'
+                        }}
                         placeholder="请输入搜索内容"
                         defaultActiveFirstOption={false}
                         optionLabelProp="text"
-                        autoFocus={this.state.open}
+                        autoFocus
                         allowClear
                         open={this.state.open}
                     >
@@ -87,7 +88,13 @@ class Complete extends React.Component {
                                         open: false,
                                     })
                                     getList(this.state.query)
+                                    push("/home")
                                 }
+                            }}
+                            onBlur={() => {
+                                this.setState({
+                                    open: false,
+                                })
                             }}
                             suffix={
                                 <Button
@@ -100,6 +107,7 @@ class Complete extends React.Component {
                                             open: false,
                                         })
                                         getList(this.state.query)
+                                        push("/home")
                                     }}
                                 >
                                     <Icon type="search" />

@@ -25,6 +25,7 @@ div.home-outer {
             align-items    : center;
             padding        : 1em;
 
+
             div.title-main {
                 width: 100%;
             }
@@ -38,11 +39,13 @@ div.home-outer {
             }
 
             @media(max-width:400px) {
-                width: 100%;
-
                 img {
                     display: none;
                 }
+            }
+
+            @media(max-width:635px) {
+                width: 100%;
             }
 
         }
@@ -60,57 +63,28 @@ div.home-outer {
                 flex-direction: column;
                 overflow      : hidden;
 
-                //轨道
-                ::-webkit-scrollbar-track {
-                    background-color: #d4d4d4;
-                }
-
                 ::-webkit-scrollbar {
-                    width           : 5px;
-                    background-color: #fff;
+                    width : 3px;
+                    height: 90%;
                 }
 
                 ::-webkit-scrollbar-thumb {
                     border-radius: 10px;
+                    border-radius: 1em;
                     box-shadow   : 0 0 5px rgba(0, 0, 0, 0.2);
                     background   : #1DA57A;
                 }
 
-
                 div.content {
                     flex-direction  : column;
+                    position        : relative;
                     max-height      : calc(100vh - 100px);
                     min-height      : calc(100vh - 100px);
-                    overflow        : auto;
+                    overflow        : hidden;
                     border-radius   : .5em;
                     display         : flex;
                     box-shadow      : 0 0 .5em #1DA57A;
                     background-color: #fff;
-
-
-
-                    &>p {
-                        margin: 0;
-                    }
-
-                    div.content-item {
-                        flex-direction: column;
-                        display       : flex;
-                        padding       : 1em 0.5em;
-
-                        a.title {
-                            text-decoration: underline;
-                            font-size      : 1.1em;
-                        }
-
-                        div.content-item-text {
-                            span.text-time {
-                                margin-right: 1em;
-                            }
-
-                            span.text-main {}
-                        }
-                    }
                 }
             }
 
@@ -186,8 +160,6 @@ div.home-outer {
             }
 
             @media(max-width:635px) {
-
-
                 div.nav {
                     width           : 100%;
                     background-color: #1DA57A;

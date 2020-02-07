@@ -1,12 +1,16 @@
-import { observable, computed, action } from 'mobx'
+import { observable, action } from 'mobx'
 import Ajax from './ajax'
 
 
 class Count {
-    name = 'togoc'
     @observable orderList = []
+    orderListStore = []
     @observable list = []
+    listStore = []
     @observable todoList = []
+    detailListStore = []
+    @observable currentDetail = ""
+
 
     @action addTodo = (str) => {
         str = str.replace(/\s+/g, " ")
@@ -26,20 +30,46 @@ class Count {
 
 
 
-    @action getOrderList = async (str) => {
-        str = str.replace(/\s+/g, "")
-        if (str === "") return
-        await Ajax.get('/order-list?keyword=' + str).then(res => {
-            this.orderList = res.data
-        })
+    @action getOrderList = (str) => {
+        this.orderList = []
+        this.orderListStore.forEach(v => v.title === str && (this.orderList = v.list))
+        this.orderList.length === 0 &&
+            Ajax.get('/order-list?keyword=' + str).then(res => {
+                this.orderList = res.data
+                this.orderListStore.push({
+                    list: res.data.length === 0 ? [{
+                        keyword: "无数据"
+                    }] : res.data, title: str
+                })
+            })
     }
 
-    @action getList = async (str) => {
-        str = str.replace(/\s+/g, " ")
-        if (str === "") return
-        await Ajax.get('/form-list?keyword=' + str).then(res => {
-            this.list = res.data
-        })
+    @action getList = (str) => {
+        this.list = []
+        this.orderList = []
+        this.listStore.forEach(v => v.title === str && (this.list = v.list))
+        this.list.length === 0 &&
+            Ajax.get('/form-list?keyword=' + str).then(res => {
+                this.list = res.data
+                this.listStore.push({
+                    list: res.data.length === 0 ? [{
+                        keyword: "无数据"
+                    }] : res.data, title: str
+                })
+            })
+    }
+
+
+    @action getDetail = (id) => {
+        this.currentDetail = ""
+        this.detailListStore.forEach(v => v.id === id && (this.currentDetail = v.detail))
+        this.currentDetail.length === 0 &&
+            Ajax.get('/detail?_id=' + id).then(res => {
+                this.currentDetail = res.data
+                this.detailListStore.push({
+                    detail: res.data.length === 0 ? "1" : res.data, id
+                })
+            })
     }
 }
 

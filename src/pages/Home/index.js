@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import moment from 'moment'
+import { Route, Switch } from 'react-router-dom'
 import { BackTop } from 'antd'
-import { Link } from 'react-router-dom'
-import { Title } from '../../components'
+import { Title, Form } from '../../components'
+import Detail from '../Detail'
 
 import './index.less'
 @inject('store')
@@ -14,36 +14,21 @@ import './index.less'
 
     render() {
         const { list, todoList, addTodo, delTodo } = this.props.store
+        const { push } = this.props.history
         return (
             <div className="home-outer">
                 <BackTop />
                 <div className="home">
                     <div className="title">
-                        <Title />
+                        <Title push={push} />
                     </div>
                     <div className="main">
                         <div className="nav">
                             <div className="content">
-                                {
-                                    list.length === 0 ?
-                                        <p>无数据! tips:头内容必须正确!</p>
-                                        :
-                                        list.map(v => {
-                                            return (
-                                                <div className="content-item" key={v.keyword}>
-                                                    <div className="item-title"><Link className="title" to="/detail">{v.keyword}</Link></div>
-                                                    <div className="content-item-text">
-                                                        <span className="text-time">
-                                                            {moment(v.data).format('YYYY-MM-DD')}
-                                                        </span>
-                                                        <span className="text-main">
-                                                            {v.main}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                }
+                                <Switch>
+                                    <Route component={Detail} path="/home/:id" />
+                                    <Route render={() => <Form list={list} />} path="/home" eaxct />
+                                </Switch>
                             </div>
                         </div>
                         <div className="tips">
