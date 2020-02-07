@@ -60,14 +60,14 @@ class Count {
     }
 
 
-    @action getDetail = (id) => {
+    @action getDetail = (source) => {
         this.currentDetail = ""
-        this.detailListStore.forEach(v => v.id === id && (this.currentDetail = v.detail))
+        this.detailListStore.forEach(v => v.source === source && (this.currentDetail = v.detail))
         this.currentDetail.length === 0 &&
-            Ajax.get('/detail?_id=' + id).then(res => {
+            Ajax.get('/detail?source=' + source).then(res => {
                 this.currentDetail = res.data
                 this.detailListStore.push({
-                    detail: res.data.length === 0 ? "1" : res.data, id
+                    detail: res.data.length === 0 ? "1" : res.data, source
                 })
             })
     }

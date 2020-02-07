@@ -34,19 +34,16 @@ import './index.less'
                         <div className="tips">
                             <div className="tips-inner">
                                 {
-                                    todoList.map(v => {
-                                        return (
-                                            <div className="todo-item" title="🗑" key={v.id} onClick={
-                                                () => {
-                                                    delTodo(v.id)
-                                                }
-                                            }>
-                                                <div className="todo-item-inner">
-                                                    {v.title}
-                                                </div>
+                                    todoList.map(v => (
+                                        <div className="todo-item" title="🗑" key={v.id} onClick={() => {
+                                            delTodo(v.id)
+                                        }}>
+                                            <div className="todo-item-inner">
+                                                {v.title}
                                             </div>
-                                        )
-                                    })
+                                        </div>
+                                    )
+                                    )
                                 }
                                 <div className="add-content todo-item">
                                     {

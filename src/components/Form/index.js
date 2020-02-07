@@ -12,14 +12,13 @@ export default class Item extends Component {
                     list.length === 0 ?
                         <Empty description="暂无数据" />
                         :
-                        list.map(v => v.keyword == '无数据' ?
+                        list.map(v => v.keyword === '无数据' ?
                             <Empty key={v.keyword} description="暂无数据" />
                             :
                             (
                                 <div className="content-item" key={v.keyword}>
-                                    <div className="item-title"><Link className="title" to={"/home/" + v._id}>{v.keyword}</Link></div>
+                                    <div className="item-title"><Link className="title" to={"/home/" + v.source}>{v.keyword}</Link></div>
                                     <div className="content-item-text">
-
                                         <span className="text-main">
                                             <span className="text-time">
                                                 {moment(v.data).format('YYYY-MM-DD')}

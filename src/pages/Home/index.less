@@ -65,7 +65,7 @@ div.home-outer {
 
                 ::-webkit-scrollbar {
                     width : 3px;
-                    height: 90%;
+                    height: 3px;
                 }
 
                 ::-webkit-scrollbar-thumb {
@@ -110,12 +110,14 @@ div.home-outer {
                         flex-wrap      : wrap;
                         justify-content: center;
                         align-items    : center;
+                        box-sizing     : border-box;
                         width          : 100%;
-                        margin         : .5em;
+                        margin         : .5em 0;
                         border         : 1px solid rgba(172, 172, 172, 0.479);
 
                         div.todo-item-inner {
-                            margin         : .25em;
+                            padding        : .25em;
+                            box-sizing     : border-box;
                             display        : flex;
                             justify-content: center;
                             align-items    : center;

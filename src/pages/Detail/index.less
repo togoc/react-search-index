@@ -28,7 +28,7 @@ div.content-outer {
 
     ::-webkit-scrollbar {
         width : 3px;
-        height: 90%;
+        height: 3px;
     }
 
     ::-webkit-scrollbar-thumb {
@@ -44,6 +44,7 @@ div.content-outer {
         padding         : .5em;
         background-color: #fff;
         overflow        : auto;
+        overflow-x      : hidden;
         scroll-behavior : smooth;
 
         h1 {
@@ -63,6 +64,21 @@ div.content-outer {
             border-right    : .2em solid #c3deb7;
             width           : 100%;
             background-color: #f6f8fa;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        code {
+            background-color: #f6f8fa;
+            cursor          : pointer;
+            transition      : all .2s linear;
+            margin          : 0 2px;
+
+            &:hover {
+                background-color: #c3deb7;
+            }
         }
 
     }

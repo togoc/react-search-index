@@ -69,6 +69,7 @@ class Complete extends React.Component {
                                 query: str,
                             })
                             this.onSearch(str)
+                            push("/home")
                         }}
                         filterOption={(inputValue, option) => {
                             return option.key !== '无数据'

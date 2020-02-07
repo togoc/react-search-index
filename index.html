@@ -9,11 +9,8 @@
 </head>
 
 <body>
-  <table>
-    <tbody>
-
-    </tbody>
-  </table>
+  <code>复制11</code>
+  <code>12</code>
 
 </body>
 <script>
@@ -23,7 +20,20 @@
       console.log(str.slice(i, j))
     }
   }
+  function copy() {
+    console.log(this)
 
+  }
+  document.querySelector('code').addEventListener('click', function () {
+    console.log(this)
+    var text = this.innerText;
+    var textarea = document.createElement('textarea');
+    document.body.appendChild(textarea)
+    textarea.value = text
+    textarea.select();
+    document.execCommand("Copy");
+    document.body.removeChild(textarea)
+  })
 </script>
 
 </html>
