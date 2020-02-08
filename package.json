@@ -2,6 +2,7 @@
     "name": "react-search-index",
     "version": "0.1.0",
     "proxy": "http://localhost:80",
+    "homepage": ".",
     "private": true,
     "dependencies": {
         "@babel/plugin-proposal-decorators": "^7.8.3",

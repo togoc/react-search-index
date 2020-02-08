@@ -13,27 +13,9 @@
   <code>12</code>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
-  let str = '12345'
-  for (let i = 1; i <= str.length; i++) {
-    for (let j = i + 1; j <= str.length; j++) {
-      console.log(str.slice(i, j))
-    }
-  }
-  function copy() {
-    console.log(this)
-
-  }
-  document.querySelector('code').addEventListener('click', function () {
-    console.log(this)
-    var text = this.innerText;
-    var textarea = document.createElement('textarea');
-    document.body.appendChild(textarea)
-    textarea.value = text
-    textarea.select();
-    document.execCommand("Copy");
-    document.body.removeChild(textarea)
-  })
+  console.log(new Vue())
 </script>
 
 </html>
